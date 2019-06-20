@@ -1,10 +1,17 @@
-const http = require("http");
+const express = require("express");
 
-http
-  .createServer((req, res) => {
-    console.log(req);
-    return res.end("Hello World");
-  })
-  .listen(8080);
+const app = express();
 
-process.on('SIGINT', () => process.exit());
+app.get("/", (req, res) => {
+  return res.send(`Bem-vindo, ${req.query.name}`);
+});
+
+app.get("/nome/:name", (req, res) => {
+  return res.json({
+    message: `Bem-vindo, ${req.params.name}`
+  });
+});
+
+app.listen(8080);
+
+process.on("SIGINT", () => process.exit());
